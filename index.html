@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Model Evaluation Lab</title>
+    <meta name="description" content="A compact undergraduate lab on cross-validation, grouped data, and data leakage.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Main navigation">
+        <div class="brand">Model Evaluation Lab</div>
+        <div class="nav-links">
+          <a href="#problem">Problem</a>
+          <a href="#module">Module</a>
+          <a href="#materials">Materials</a>
+          <a href="#fit">Teaching Fit</a>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">Undergraduate data science teaching demo</div>
+          <h1>When good test scores lie</h1>
+          <p class="lead">
+            A one class lab that helps students discover why a random train and test split can overstate performance when data are grouped by site, cohort, sensor, or source.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="assignment.md">Open Assignment</a>
+            <a class="button" href="notebooks/model_evaluation_lab.ipynb">Download Notebook</a>
+            <a class="button" href="data/synthetic_sensor_microbiome.csv">View Data</a>
+          </div>
+        </div>
+
+        <aside class="demo-card" aria-label="Validation comparison">
+          <h2>Same model, different question</h2>
+          <p class="note">Illustrative R squared values from the synthetic lab data.</p>
+          <div class="metric">
+            <div class="metric-row">
+              <span>Random rows</span>
+              <span>0.89</span>
+            </div>
+            <div class="bar-track" aria-hidden="true"><div class="bar random"></div></div>
+          </div>
+          <div class="metric">
+            <div class="metric-row">
+              <span>Held out sites</span>
+              <span>0.54</span>
+            </div>
+            <div class="bar-track" aria-hidden="true"><div class="bar group"></div></div>
+          </div>
+          <p class="note">
+            The model did not get worse. The evaluation question changed.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <main>
+      <section id="problem" class="section">
+        <h2>The Teaching Problem</h2>
+        <p>
+          Students often learn the mechanics of model fitting before they learn to ask what a test set represents. This lab creates a concrete failure case. A model looks strong when rows are split randomly, but performance drops when the test set contains a site the model has never seen.
+        </p>
+        <div class="callout">
+          The main lesson is simple: validation is not a formality. It is the bridge between a numerical score and the claim a scientist, engineer, or analyst wants to make.
+        </div>
+      </section>
+
+      <section id="module" class="section">
+        <h2>Module Structure</h2>
+        <div class="grid">
+          <article class="panel">
+            <h3>1. Fit one model</h3>
+            <p>Students fit a baseline regression model to synthetic grouped data inspired by sensor readings and sparse biological counts.</p>
+          </article>
+          <article class="panel">
+            <h3>2. Compare splits</h3>
+            <p>They evaluate the same model with a random split and a group held out split.</p>
+          </article>
+          <article class="panel">
+            <h3>3. Defend a claim</h3>
+            <p>They write which score is appropriate for predicting at a new site and explain why.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>What Students Compare</h2>
+        <div class="comparison">
+          <table>
+            <thead>
+              <tr>
+                <th>Validation Design</th>
+                <th>What It Tests</th>
+                <th>Main Risk</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Random row split</td>
+                <td>Performance on held out rows from sites already represented in training.</td>
+                <td>Can leak site level signal into the test set.</td>
+              </tr>
+              <tr>
+                <td>Group held out split</td>
+                <td>Performance on a site not represented in training.</td>
+                <td>Harder test, but better aligned with deployment to a new site.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="materials" class="section">
+        <h2>Materials</h2>
+        <div class="grid">
+          <article class="panel">
+            <h3>Assignment</h3>
+            <p>Student facing prompt with deliverables, metrics, reflection questions, and an extension.</p>
+            <a href="assignment.md">Read assignment</a>
+          </article>
+          <article class="panel">
+            <h3>Notebook</h3>
+            <p>Starter notebook using pandas and NumPy. Students can run and extend it.</p>
+            <a href="notebooks/model_evaluation_lab.ipynb">Open notebook file</a>
+          </article>
+          <article class="panel">
+            <h3>Instructor Notes</h3>
+            <p>Discussion prompts and grading focus for adapting the lab to different course levels.</p>
+            <a href="instructor_notes.md">Read notes</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="fit" class="section">
+        <h2>Why This Fits a Liberal Arts CS Course</h2>
+        <p>
+          The lab is small enough for an undergraduate classroom, but it connects programming, statistics, communication, and scientific judgment. It can support introductory data science, machine learning, scientific computing, or capstone preparation. The same structure can be adapted to bioinformatics, environmental data, sensor systems, or regional workforce projects where students need to explain what a model can and cannot claim.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      Created by Daniel Agyapong as a teaching demonstration for undergraduate computer science and data science courses.
+    </footer>
+  </body>
+</html>
